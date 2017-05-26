@@ -4,7 +4,7 @@
 <cfset This.loginstorage="session"> 
  
 <cffunction name="OnRequestStart"> 
-    <cfargument name = "request" required="true"/> 
+    <!---<cfargument name = "request" required="true"/> 
     <cfif IsDefined("form.logout")> 
         <cflogout> 
     </cfif> 
@@ -51,7 +51,7 @@
         </cfif> 
     </cflogin> 
  
-    <cfif GetAuthUser() NEQ ""> 
+    <cfif GetAuthUser() NEQ ""> --->
             <cfoutput>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
             <script src="js/jquery-3.2.1.min.js" ></script>
@@ -76,7 +76,7 @@
               <a class="navbar-brand" href="index.cfm"><img src="img/logosm.jpg"> #this.name#</a>
 
               <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
+               <!--- <ul class="navbar-nav mr-auto">
                     <cfif trim(userRole) eq "1">
                         <li class="nav-item active">
                             <a class="nav-link" href="admin.cfm"><i class="fa fa-cubes" aria-hidden="true"></i> Administrador <span class="sr-only">(current)</span></a>
@@ -88,37 +88,16 @@
                         </li>
                     </cfif>
                 </ul>
-                <a class="nav-link" style="color:white"><b>#GetAuthUser()#</b></a>
+               <a class="nav-link" style="color:white"><b>#GetAuthUser()#</b></a>
            
                 <form class="form-inline my-2 my-md-0 " id="logoutForm" name="logoutForm" action="index.cfm" method="Post">
                     <input type="hidden" id="logout" name="logout">
                     <button class="btn btn-default accent-color" type="submit" onClick="logoutForm.submit();">Salir</button>
-                </form>  
+                </form>  --->
               </div>
             </nav>
         </cfoutput>
-    </cfif> 
+   <!--- </cfif> --->
 </cffunction> 
-<cffunction name="onError"> 
-    <cfargument name="Exception" required=true/> 
-    <cfargument type="String" name="EventName" required=true/> 
-    <!--- Log all errors. ---> 
-    <cflog file="#This.Name#" type="error"  
-            text="Event Name: #Arguments.Eventname#" > 
-    <cflog file="#This.Name#" type="error"  
-            text="Message: #Arguments.Exception.message#"> 
-    <cflog file="#This.Name#" type="error"  
-        text="Root Cause Message: #Arguments.Exception.rootcause.message#"> 
-    <!--- Display an error message if there is a page context. ---> 
-    <cfif NOT (Arguments.EventName IS "onSessionEnd") OR  
-            (Arguments.EventName IS "onApplicationEnd")> 
-        <cfoutput> 
-            <h2>An unexpected error occurred.</h2> 
-            <p>Please provide the following information to technical support:</p> 
-            <p>Error Event: #Arguments.EventName#</p> 
-            <p>Error details:<br> 
-            <cfdump var=#Arguments.Exception#></p> 
-        </cfoutput> 
-    </cfif> 
-</cffunction>
+
 </cfcomponent>
