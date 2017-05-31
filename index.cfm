@@ -10,7 +10,6 @@
       <link href="css/justified-nav.css" rel="stylesheet">
     </head>
     <body>
-  
       <!-- Jumbotron -->
       <div class="jumbotron" id="formDiv">
         <h1>#application.applicationname#</h1>
@@ -34,12 +33,11 @@
           <select id="version" name="version" class="form-control" disabled>
               <option value="">Version
           </select><br>          
-          <div id="buttondiv">
+          <div id="buttondiv" style="display:none;">
           <button class="default-primary-color btn btn-lg btn-block" type="submit" style="color:white;"><i class="fa fa-search" aria-hidden="true"></i> Consultar</button>
           </form>           
           </div>
       </div>
-      <!-- Site footer -->
       <footer class="footer">
         <p><a href="http://xikmaapps.com/">&copy; Xikma Apps</a> #year(now())#</p>
       </footer>
