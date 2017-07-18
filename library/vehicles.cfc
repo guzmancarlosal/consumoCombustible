@@ -58,7 +58,7 @@
         <cfargument name="modelo" type="string" required="no"  default="">
          <cfargument name="version" type="string" required="no"  default="">
         <cfquery name="qGetOrg" datasource="#this.odbc#">
-            select distinct company, submarca, version, rciudad, rcarr, rcomb, rajust, cilindros, modelo
+            select distinct company, submarca, version, rciudad, rcarr, rcomb, rajust, cilindros, modelo,id
             from [vehiculo] with (nolock)
             where 1=1 
                 <cfif arguments.company neq "">

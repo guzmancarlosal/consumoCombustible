@@ -4,7 +4,7 @@
 <html>
   <head>
     <cfprocessingdirective pageencoding = "utf-8">
-    <link rel="icon" href="img/logo.jpg">
+    <link rel="icon" href="img/logo.png">
 
     <title>Login</title>
 
@@ -36,7 +36,7 @@
     <div class="container text-center">
       
       <form class="form-signin" action="#CGI.script_name#?#CGI.query_string#" method="Post">
-        <img src="img/logo.jpg">
+        <img src="img/logo.png">
         <h2 class="form-signin-heading">Consumo Combustible</h2>
         <h3 class="form-signin-heading"></h2>
         <label for="inputEmail" class="sr-only">Usuario</label>

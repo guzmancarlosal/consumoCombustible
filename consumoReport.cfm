@@ -3,10 +3,26 @@
 <cfparam name="form.ano" default="">
 <cfparam name="form.version" default="">
 <cfparam name="request.odbc" default="cc_consumo">
+<cfparam name="local.userid" default="">
+<cfparam name="request.user.qUser.id" default="">
 <cfprocessingdirective pageencoding = "utf-8">
+
+
 <cfset lObj = createObject("component","library.vehicles").init(odbc=request.ODBC)>
+<cfset userObj = createObject("component","library.user").init(odbc=request.ODBC)>
 <cfset getModelos =lObj.getVehidetaqil(company=form.marca, modelo=form.modelo, ano=form.ano, version=form.version)>
+<cfset getFavoritos =userObj.getFav(idUser=request.user.qUser.id)>
+
 <cfoutput>
+<script>
+	function saveBtn(userid, vehid,mode) {
+		$.post( "action.cfm", { userid:userid, vehid: vehid,mode:mode })
+		  .done(function( data ) {
+		    window.location.href = "mycars.cfm?email=#url.email#";
+		  });
+	}
+
+</script>
 <html>
 	<link href="css/justified-nav.css" rel="stylesheet">
 <div class="jumbotron" id="formDiv">
@@ -64,19 +80,37 @@
 
 	        chart.draw(data,options);
 	      }
+
 	    </script>
+	
   		<body  style="font-family: Arial;border: 0 none;">
-  	 
 		  	<h2>#form.marca# #form.modelo# (#form.ano#)</h2><br>
-		  	<h5>#form.version#</h5><br>
+		  	<h5>#form.version#</h5>
+		  	<cfif isdefined('request.user.qUser.id') and request.user.qUser.id neq "">
+				<cfquery name="qGetVehiculo" dbtype="query">
+					Select distinct * from getFavoritos where idvehiculo='#getmodelos.id#'
+				</cfquery>
+				<cfif qGetVehiculo.recordcount>
+					<a class="btn btn-lg btn-danger btn-block" role="button" id="startBtn"   onclick="saveBtn('#request.user.qUser.id#','#getmodelos.id#','remFav');">
+			  			<i class="fa fa-times" aria-hidden="true"></i> 
+			  			Quitar de Favorito
+			  		</a>
+				<cfelse>
+			  		<a class="btn btn-lg btn-success btn-block" role="button" id="startBtn" onclick="saveBtn('#request.user.qUser.id#','#getmodelos.id#','addFav');">
+			  			<i class="fa fa-star-o" aria-hidden="true"></i> 
+			  			Guardar #form.modelo# (#form.ano#) como Favoritos
+			  		</a>
+			  	</cfif>
+		  	</cfif>
+		  	<br>
 		  	Rendimiento (litros/kilometro)<br>
 		    <div id="chart_div" align="center"></div>
-
-
 	</cfif>
 	<a class="btn btn-lg btn-danger" href="index.cfm" role="button" id="startBtn">Regresar</a>
 	</div>
 </body>
 </html>
+
+
 
 </cfoutput>

@@ -1,20 +1,29 @@
 <cfparam name="request.ODBC" default="cc_consumo">
+<cfparam name="request.user" default="">
 <cfset lObj = createObject("component","library.vehicles").init(odbc=request.ODBC)>
 <cfset qgetAllVeh =lObj.getVeh()>
+<cfprocessingdirective pageencoding = "utf-8"/>
 <cfoutput>
   <!DOCTYPE html>
   <html>
     <head>
-      <cfprocessingdirective pageencoding = "utf-8">
       <title>Consumo Combustible</title>
       <link href="css/justified-nav.css" rel="stylesheet">
     </head>
     <body>
-      <!-- Jumbotron -->
       <div class="jumbotron" id="formDiv">
-        <h1>#application.applicationname#</h1>
-        <p class="lead">Selecciona tu vehículo para consultar el consumo de combustible!</p>
-        <form id="thisForm" method="post" action="consumoReport.cfm">   
+        <cfif isdefined("request.user.quser.username")  and request.user.quser.username neq "">
+          <h1>Bienvenido #request.user.quser.username#</h1>
+          <div class="g-signin2" data-onsuccess="onSignIn" id="iduser"></div> 
+          <cfinclude template="userActions.cfm"/>
+        <cfelse>
+           <h1>#application.applicationname#</h1>
+        
+        </cfif>
+        <p class="lead">Selecciona tu vehículo para consultar el consumo de combustible!</p>  
+        <div id="status"></div>
+
+        <form id="thisForm" method="post" action="consumoReport.cfm?email=#url.email#">   
           <select id="marca" name="marca" class="form-control">
               <option value="">Marca
               <cfloop query="#qgetAllVeh#">

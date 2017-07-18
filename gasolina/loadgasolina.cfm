@@ -17,7 +17,7 @@ query="myQuery">
 <cfloop query="#myQuery#">
 
 	<cfquery name="qInsBrand" datasource="cc_consumo">
-		insert into vehiculo([company]
+		nsert into vehiculo([company]
       ,[submarca]
       ,[version]
       ,[modelo]
