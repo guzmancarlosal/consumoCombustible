@@ -22,7 +22,7 @@
         <cfquery name="qGetOrg" datasource="#this.odbc#">
             select distinct submarca
             from [vehiculo] with (nolock)
-            where company='#arguments.company#'
+            where company=<cfqueryparam value="#arguments.company#"  cfsqltype="cf_sql_varchar">
             order by submarca
         </cfquery>
         <cfreturn qGetOrg />
@@ -34,8 +34,9 @@
         <cfquery name="qGetOrg" datasource="#this.odbc#">
             select distinct version
             from [vehiculo] with (nolock)
-            where company='#arguments.company#'
-                and modelo = '#arguments.ano#' and submarca ='#arguments.modelo#'
+            where company= <cfqueryparam value="#arguments.company#"  cfsqltype="cf_sql_varchar">
+                and modelo = <cfqueryparam value="#arguments.ano#"  cfsqltype="cf_sql_varchar"> 
+                and submarca = <cfqueryparam value="#arguments.modelo#"  cfsqltype="cf_sql_varchar">
             order by version
         </cfquery>
         <cfreturn qGetOrg />
@@ -46,14 +47,14 @@
         <cfquery name="qGetOrg" datasource="#this.odbc#">
             select distinct modelo
             from [vehiculo] with (nolock)
-            where company='#arguments.company#'
-               and submarca ='#arguments.modelo#'
+            where company=<cfqueryparam value="#arguments.company#"  cfsqltype="cf_sql_varchar">
+               and submarca =<cfqueryparam value="#arguments.modelo#"  cfsqltype="cf_sql_varchar">
             order by modelo
         </cfquery>
         <cfreturn qGetOrg />
     </cffunction>
     <cffunction access="public" name="getVehidetaqil" output="false" returntype="query">
-         <cfargument name="company" type="string" required="no" default="">
+        <cfargument name="company" type="string" required="no" default="">
         <cfargument name="ano" type="string" required="no"  default="">
         <cfargument name="modelo" type="string" required="no"  default="">
          <cfargument name="version" type="string" required="no"  default="">
@@ -62,20 +63,45 @@
             from [vehiculo] with (nolock)
             where 1=1 
                 <cfif arguments.company neq "">
-                    and company='#arguments.company#'
+                    and company=<cfqueryparam value="#arguments.company#"  cfsqltype="cf_sql_varchar">
                 </cfif>
                 <cfif arguments.ano neq "">
-                    and modelo='#arguments.ano#'
+                    and modelo=<cfqueryparam value="#arguments.ano#"  cfsqltype="cf_sql_varchar">
                 </cfif>
                 <cfif arguments.modelo neq "">
-                    and submarca='#arguments.modelo#'
+                    and submarca=<cfqueryparam value="#arguments.modelo#"  cfsqltype="cf_sql_varchar">
                 </cfif>
                 <cfif arguments.version neq "">
-                    and version='#arguments.version#'
+                    and version=<cfqueryparam value="#arguments.version#"  cfsqltype="cf_sql_varchar">
                 </cfif>
             order by company, submarca
         </cfquery>
         <cfreturn qGetOrg />
     </cffunction>
+    <cffunction access="public" name="getMyVeh" output="false" returntype="query">
+        <cfargument name="userID" type="string" required="yes" default="0">
+        <cfquery name="qGetOrg" datasource="#this.odbc#">
+            select distinct id, company, submarca, version, modelo
+            from vehiculo
+            inner join user_vehiculo with (nolock) ON user_vehiculo.idVehiculo=vehiculo.id
+            where user_vehiculo.idUser=<cfqueryparam value="#arguments.userID#"  cfsqltype="cf_sql_varchar">
+        </cfquery>
+        <cfreturn qGetOrg />
+    </cffunction>
+    <cffunction access="public" name="getLastLog" output="false" returntype="query">
+        <cfargument name="userID" type="string" required="yes" default="0">
+         <cfargument name="idVehiculo" type="string" required="no" default="">
+        <cfquery name="qGetOrg" datasource="#this.odbc#">
+            select top 1 idLoad, fecha
+            from [load]
+            where [load].idUser='#arguments.userID#'
+                <cfif arguments.idVehiculo neq "">
+                    and idVehiculo=<cfqueryparam value="#arguments.idVehiculo#"  cfsqltype="cf_sql_varchar">
+                </cfif>
+            order by fecha desc
+        </cfquery>
+        <cfreturn qGetOrg />
+    </cffunction>
+
 
 </cfcomponent>

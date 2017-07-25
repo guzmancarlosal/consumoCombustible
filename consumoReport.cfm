@@ -12,7 +12,6 @@
 <cfset userObj = createObject("component","library.user").init(odbc=request.ODBC)>
 <cfset getModelos =lObj.getVehidetaqil(company=form.marca, modelo=form.modelo, ano=form.ano, version=form.version)>
 <cfset getFavoritos =userObj.getFav(idUser=request.user.qUser.id)>
-
 <cfoutput>
 <script>
 	function saveBtn(userid, vehid,mode) {
@@ -27,7 +26,7 @@
 	<link href="css/justified-nav.css" rel="stylesheet">
 <div class="jumbotron" id="formDiv">
 	<cfif getModelos.recordcount gt 2>
-		<a class="btn btn-lg btn-danger btn-block" href="index.cfm" role="button" id="startBtn">Regresar</a>
+		<a class="btn btn-lg btn-danger btn-block" href="index.cfm?email=#url.email#" role="button" id="startBtn">Regresar</a>
 		<table id="output" class="table">
 			<thead>
 			<tr>
@@ -106,7 +105,7 @@
 		  	Rendimiento (litros/kilometro)<br>
 		    <div id="chart_div" align="center"></div>
 	</cfif>
-	<a class="btn btn-lg btn-danger" href="index.cfm" role="button" id="startBtn">Regresar</a>
+	<a class="btn btn-lg btn-danger" href="index.cfm?email=#url.email#" role="button" id="startBtn">Regresar</a>
 	</div>
 </body>
 </html>

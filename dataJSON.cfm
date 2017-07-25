@@ -2,8 +2,11 @@
 <cfparam name="request.ODBC" default="cc_consumo">
 <cfparam name="variables.responseJson" default="">
 <cfset local.responseJson=[]>
-<!---<cfprocessingdirective pageEncoding="utf-8">
-<cfheader charset="utf-8" name="Content-Type" value="application/json">--->
+<cfprocessingdirective pageEncoding="utf-8">
+<cfheader charset="utf-8" name="Content-Type" value="application/json">
+<cftry>
+	
+
 <cfcontent reset="yes">
 <cfset lObj = createObject("component","library.vehicles").init(odbc=request.ODBC)>
 <cfif url.mode eq "getModel">
@@ -30,6 +33,12 @@
 			<cfset arrayAppend(local.responseJson, {'name':getModelos.modelo} )>
 		</cfloop>
 	</cfif>
+<cfelseif url.mode eq "getSpend">
+	<cfparam name="url.vehicleID" default="">
+	<cfparam name="form.userid" default="">
+	<cfset loadObj = createObject("component","library.load").init(odbc=request.ODBC)>
+	<cfset local.responseJson = loadObj.getMonthSpent(idUser=form.userid,idVehiculo=url.vehicleID)>
 </cfif>
-
 <cfoutput>#serializeJSON(local.responseJson)#</cfoutput>
+<cfcatch><cfdump var="#cfcatch#"></cfcatch>
+</cftry>

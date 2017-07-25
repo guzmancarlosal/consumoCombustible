@@ -73,7 +73,8 @@
     <cffunction  access="public" name="getMyVehicle" output="false" returntype="query">
         <cfargument name="idUser" type="string" required="true">    
         <cfquery name="qGetData" datasource="#this.odbc#">
-            Select distinct * from user_vehiculo uv
+            Select distinct company, submarca, version, rciudad, rcarr, rcomb, rajust, cilindros, modelo,id 
+            FROM user_vehiculo uv
                 INNER JOIN vehiculo on uv.idvehiculo=vehiculo.id
             where uv.idUser=<cfqueryparam value="#arguments.idUser#"  cfsqltype="cf_sql_varchar">;
         </cfquery>
