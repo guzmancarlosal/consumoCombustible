@@ -97,7 +97,7 @@
 				<cfelse>
 			  		<a class="btn btn-lg btn-success btn-block" role="button" id="startBtn" onclick="saveBtn('#request.user.qUser.id#','#getmodelos.id#','addFav');">
 			  			<i class="fa fa-star-o" aria-hidden="true"></i> 
-			  			Guardar #form.modelo# (#form.ano#) como Favoritos
+			  			Guardar <br> como Favoritos
 			  		</a>
 			  	</cfif>
 		  	</cfif>

@@ -19,7 +19,7 @@
         <cfset request.user.qUser = userObj.getUser(id=url.email)>
         <cfset request.userObj = createObject("component","library.user").init(odbc=request.ODBC)>
         <cflogin>
-            <cfloginuser name="#url.email#" Password = "1234" roles="#qUser.type#">
+            <cfloginuser name="#url.email#" Password = "1234" roles="1">
         </cflogin> 
     </cfif>
     <cfoutput>
@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="fa/css/font-awesome.min.css">
         <link href="css/palette.css" rel="stylesheet">
         <cfinclude template="verification.cfm">
+
         <style>
             body {
                 padding-top: 0px !important;
@@ -66,7 +67,7 @@
             <cfif #GetAuthUser()# neq "">
                 <form class="form-inline my-2 my-md-0" id="logoutForm" name="logoutForm" action="index.cfm" method="Post">
                     <input type="hidden" id="logout" name="logout">
-                    <button class="btn btn-default" type="submit" onClick="logoutForm.submit();">Salir</button>
+                    <button class="btn btn-default" type="submit" onClick="javascript:Android.showToast('hell yeah');">Salir</button>
                 </form>  
             </cfif>
           </div>
@@ -74,4 +75,31 @@
 
     </cfoutput>
 </cffunction> 
+<cffunction name="onError"> 
+    Disculpa las molestias.
+    <cfargument name="Exception" required=true/> 
+    <cfargument type="String" name="EventName" required=true/> 
+    <!--- Log all errors. ---> 
+    <cfmail from="error@xikmaapps.com" to="carlosaguzman@gmail.com" subject="Error Consumo Combustible" type="html">
+        
+   
+        <cflog file="#This.Name#" type="error"  
+                text="Event Name: #Arguments.Eventname#" > 
+        <cflog file="#This.Name#" type="error"  
+                text="Message: #Arguments.Exception.message#"> 
+        <cflog file="#This.Name#" type="error"  
+            text="Root Cause Message: #Arguments.Exception.rootcause.message#"> 
+        <!--- Display an error message if there is a page context. ---> 
+        <cfif NOT (Arguments.EventName IS "onSessionEnd") OR  
+                (Arguments.EventName IS "onApplicationEnd")> 
+            <cfoutput> 
+                <h2>An unexpected error occurred.</h2> 
+                <p>Please provide the following information to technical support:</p> 
+                <p>Error Event: #Arguments.EventName#</p> 
+                <p>Error details:<br> 
+                <cfdump var=#Arguments.Exception#></p> 
+            </cfoutput> 
+        </cfif> 
+    </cfmail>
+</cffunction>
 </cfcomponent>

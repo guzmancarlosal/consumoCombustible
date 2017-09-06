@@ -43,7 +43,7 @@
         type: "POST",
         url: 'dataJSON.cfm?mode=getModel&company='+$("##marca").val(),
         dataType: 'json',
-        success: function(json) {
+        done: function(json) {
           var $el = $("##modelo");
           $el.empty(); // remove old options
           $("##modelo").empty();
@@ -71,7 +71,7 @@
         type: "POST",
         url: 'dataJSON.cfm?mode=getAno&company='+$("##marca").val()+'&modelo='+$("##modelo").val(),
         dataType: 'json',
-        success: function(json) {
+        done: function(json) {
           var $el = $("##ano");
           $el.empty(); // remove old options
           $el.append($("<option></option>")
@@ -95,7 +95,7 @@
         type: "POST",
         url: 'dataJSON.cfm?mode=getVersion&company='+$("##marca").val()+'&ano='+$("##ano").val()+'&modelo='+$("##modelo").val(),
         dataType: 'json',
-        success: function(json) {
+        done: function(json) {
           var $el = $("##version");
           $el.empty(); // remove old options
           $el.append($("<option></option>")

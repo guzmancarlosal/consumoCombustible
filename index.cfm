@@ -3,6 +3,7 @@
 
 
 <cfprocessingdirective pageencoding = "utf-8"/>
+
 <cfoutput>
   <!DOCTYPE html>
   <html>
@@ -32,3 +33,4 @@
     </body>
   </html>
 </cfoutput>
+  <cfsetting showdebugoutput="yes">

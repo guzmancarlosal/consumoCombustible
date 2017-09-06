@@ -33,12 +33,11 @@
         		submitForm();		
 			}
 		});	
-
 		function submitForm() {
 			$("#notSavedYet").hide();
 				$("#submitButton").prop('disabled', true);
 				$.ajax({
-				  type: 'POST',
+					type:"POST",
 				  <cfoutput>url: 'loadGasAction.cfm?email=#url.email#',</cfoutput>
 				   data:  { 
 	                	idUser : $('#idUser').val(), 
@@ -49,9 +48,9 @@
 	                	comments : $('#comments').val(),
 	                	fecha : $('#day').val()
 	               },
-				  success:  function(){				
-							 $("#myModal").modal();
-						}
+				  	success:  function(){				
+					    $("#myModal").modal();
+					}
 				});
 		}	
 		$("textarea[required], input[required]").keyup(function(event) {
@@ -90,47 +89,7 @@
 	     $('#closeBtn, #closeBtn2').click(function(){
 	    	location.reload();
 	    });
-		<!---function validateForm() {
-			if(!$('#Fecha').val()) {
-				alert('El campo FECHA es requerido');
-				$('#Fecha').focus(function() {
-	  				
-				});
-				return false;	
-			}
-			if(!$('#vehicle').val()) {
-				alert('Selecciona tu VEHICULO');
-				$('#vehicle').focus(function() {
-	  				
-				});
-				return false;	
-			}
-			if(!$('#costo').val()) {
-				alert('Debes de introducir el COSTO');
-				$('#costo').focus(function() {
-	  				
-				});
-				return false;	
-			}
-			if(!$('#odometer').val()) {
-				alert('Debes de introducir el ODOMETRO');
-				$('#odometer').focus(function() {
-	  				
-				});
-				return false;	
-			}
-			if(!$('#litros').val()) {
-				alert('Debes de introducir el NUMERO DE LITROS');
-				$('#litros').focus(function() {
-	  				
-				});
-				return false;	
-			}
-			    return true;
-		}--->
 	});
-
-	
 </script>
 <style>
 	.error_show{
@@ -182,8 +141,8 @@
 				<span class="errorForm">Commentarios es requerido</span>
 			</div>
 			<div class="form-group form-group-lg text-center">
-				<button class="btn btn-success btn-lg" id="sbmBtn">Submit</button>	
-				<button class="btn btn-danger btn-lg" id="backBtn">
+				<button class="btn btn-success btn-lg" id="sbmBtn" type="button">Guardar</button>	
+				<button class="btn btn-danger btn-lg" id="backBtn" type="button">
 					Regresar
 				</button>
 				
